@@ -1,3 +1,5 @@
+// creación de colección avances
+
 db.getCollection('avances').drop();
 db.createCollection('avances',{
     validator: {
@@ -20,6 +22,8 @@ db.createCollection('avances',{
         }
     }
 });
+
+//Insertar varios avances
 
 db.getCollection('avances').insertMany([
 {
@@ -48,7 +52,10 @@ db.getCollection('avances').insertMany([
 }
 ]);
 
+//Comandos para buscar avances
 db.getCollection('avances').find();
+
+//Comandos para consultar información almacenada en la colección
 
 db.avances.insert({"project_id":db.proyectos.findOne({name: 'Project 1'},{_id: 1})._id,
     "addDate": new Date(),
@@ -56,8 +63,11 @@ db.avances.insert({"project_id":db.proyectos.findOne({name: 'Project 1'},{_id: 1
     "observations": 'aeiou',
 })
 
+
+//Comandos para eliminar un avance
 db.avances.deleteOne({"_id":ObjectId("61986f72768a6474a8faa3f3")})
 
+//Comandos para actualizar la descripción de los avances
 db.avances.updateOne(
     {"_id":ObjectId("619865dd768a6474a8faa3f2")},
     {$set:{description:"aeiou"}}
