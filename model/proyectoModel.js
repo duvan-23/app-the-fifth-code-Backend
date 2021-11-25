@@ -9,6 +9,9 @@ const proyectos=new Schema({
     startDate:{
         type:Date,
         default: new Date()
+    },
+    generalObjective:{
+        type:String
     }
 })
 module.exports = model('proyectos1',proyectos)
