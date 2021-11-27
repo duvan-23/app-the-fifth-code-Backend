@@ -1,29 +1,39 @@
 const ProyectoModel =require('./model/proyectoModel')
 
-const listProyectos=[
-    {
-        name:'Proyecto 1',
-        generalObjective: 'crear un puente',
-        budget:3000000000
-    },
-    {
-        name:'Proyecto 2',
-        generalObjective: 'crear una casa',
-        budget:2700000000
-    },
-    {
-        name:'Proyecto 3',
-        generalObjective: 'crear un edificio',
-        budget:13000000000
-    }
-]
+
 const resolvers ={
-    Query:{
-        // proyectos:()=>listProyectos,
-        // proyecto: (parent,args, context, info)=>{
-        //     return listProyectos.find(pro=> pro.name ==args.name)
-        // }
-        proyectos:async ()=> await ProyectoModel.find({})
+    Query:{       
+        proyectos:async ()=> await ProyectoModel.find({}),
+        getProyecto: async(parent,args, context, info) => await ProyectoModel.findOne({name:args.name})
+    },
+    Mutation:{
+        //crear proyecto nuevo
+        createProyecto:(parent,args, context, info)=>{
+            const {name,generalObjective,specificObjectives,budget,startDate,endDate}=args.Proyecto;
+            const nuevoProyecto = new ProyectoModel();
+            nuevoProyecto.name=name;
+            nuevoProyecto.generalObjective=generalObjective;
+            nuevoProyecto.specificObjectives=specificObjectives;
+            nuevoProyecto.budget=budget;
+            if(startDate){nuevoProyecto.startDate=startDate;}else{nuevoProyecto.startDate=new Date();}
+            nuevoProyecto.endDate=endDate;
+            return nuevoProyecto.save().then(u => "Proyecto creado")
+            .catch(err => console.log("Fallo la Creación"));
+            //.catch(err => console.log("err")) si quierover cual es el error
+        },
+        //actualizar un campo de proyectos
+        activeProyecto:(parent,args, context, info)=>{
+            return ProyectoModel.updateOne({name:args.name},{status:"ACTIVE"})
+            .then(u => "Proyecto Actualizado")
+            .catch(err => console.log("Fallo la Activación"));
+        },
+        //borrar un proyecto
+        deleteProyecto:(parent,args, context, info)=>{
+            return ProyectoModel.deleteOne({name:args.name1})
+            .then(u => "Proyecto Eliminado")
+            .catch(err => console.log("Fallo La Eliminación"));
+        }
+        
     }
 }
 module.exports= resolvers

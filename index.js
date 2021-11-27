@@ -36,7 +36,7 @@ const iniciarServidor =async()=>{
             resolvers
         });
     await apollo.start()
-    apollo.applyMiddleware({app:api})
+    apollo.applyMiddleware({app:api,path:'/consulta'})
     api.use((request, response)=>{
         response.send('Hola')
     })
