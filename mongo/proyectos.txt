@@ -6,7 +6,7 @@ db.createCollection('proyectos', {
     $jsonSchema: {
       required: ['name', 'generalObjective', 'specificObjectives', 'budget', 'startDate', 'endDate', 'leader_id', 'status'],
       properties: {
-        name: {
+         name: {
           bsonType: 'string',
         },
         generalObjective: {
@@ -16,7 +16,7 @@ db.createCollection('proyectos', {
           bsonType: 'array'
         },
         budget: {
-          bsonType: 'decimal'
+          bsonType: 'number'
         },
         startDate: {
           bsonType: 'date'
@@ -28,10 +28,10 @@ db.createCollection('proyectos', {
           bsonType: 'objectId'
         },
         status: {
-          enum: ['active', 'inactive']
+          enum: ['ACTIVE', 'INACTIVE']
         },
         phase: {
-          enum: ['started', 'in progress', 'ended']
+          enum: ['STARTED', 'IN PROGRESS', 'ENDED']
         }
       }
     }
@@ -48,7 +48,7 @@ db.getCollection('proyectos').insertMany([{
     "startDate": new Date(),
     "endDate": new Date(new Date().getTime() + 60*24*60*60000),
     "leader_id": db.usuarios.findOne({email: 'peter.griffin@mail.com'})._id,
-    "status": "inactive",
+    "status": "INACTIVE",
   },
   {
     "name": "Project 2",
@@ -58,7 +58,7 @@ db.getCollection('proyectos').insertMany([{
     "startDate": new Date(),
     "endDate": new Date(new Date().getTime() + 60*24*60*60000),
     "leader_id": db.usuarios.findOne({email: 'walter.white@mail.com'})._id,
-    "status": "inactive",
+    "status": "INACTIVE",
   },
   {
     "name": "Project 3",
@@ -68,7 +68,7 @@ db.getCollection('proyectos').insertMany([{
     "startDate": new Date(),
     "endDate": new Date(new Date().getTime() + 60*24*60*60000),
     "leader_id": db.usuarios.findOne({email: 'john.snow@mail.com'})._id,
-    "status": "inactive",
+    "status": "INACTIVE",
   },
   {
     "name": "Project 4",
@@ -78,7 +78,7 @@ db.getCollection('proyectos').insertMany([{
     "startDate": new Date(),
     "endDate": new Date(new Date().getTime() + 60*24*60*60000),
     "leader_id": db.usuarios.findOne({email: 'john.snow@mail.com'})._id,
-    "status": "inactive",
+    "status": "INACTIVE",
   }]);
 
 //insertar un valor dentro proyectos
