@@ -1,7 +1,7 @@
 require('./infraestructura/conectionDB')
 const typeDefs = require('./typeDef')
 const resolvers = require('./resolver')
-
+//mm
 const express = require('express')
 
 /*
