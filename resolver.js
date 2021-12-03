@@ -10,17 +10,19 @@ const resolvers = {
     },
     Mutation: {
         //crear proyecto nuevo
-        createProyecto: (parent, args, context, info) => {
-            const { name, generalObjective, specificObjectives, budget, startDate, endDate } = args.Proyecto;
+        createProyecto: async (parent, args, context, info) => {
+            const { name, generalObjective, specificObjectives, budget, startDate, endDate, leader_id} = args.Proyecto;
             const nuevoProyecto = new ProyectoModel();
+            const user = await UsuarioModel.findOne({email:leader_id},{fullName: 1, _id:0});
             nuevoProyecto.name = name;
             nuevoProyecto.generalObjective = generalObjective;
             nuevoProyecto.specificObjectives = specificObjectives;
             nuevoProyecto.budget = budget;
             if (startDate) { nuevoProyecto.startDate = startDate; } else { nuevoProyecto.startDate = new Date(); }
             nuevoProyecto.endDate = endDate;
-            return nuevoProyecto.save().then(u => "Proyecto creado")
-                .catch(err => console.log("Fallo la Creación"));
+            nuevoProyecto.leader_id =user.fullName;
+            return nuevoProyecto.save().then(u => "Proyecto creado")    
+                .catch(err => console.log(err));
             //.catch(err => console.log("err")) si quierover cual es el error
         },
         //actualizar un campo de proyectos

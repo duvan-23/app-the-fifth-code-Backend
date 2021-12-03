@@ -8,7 +8,7 @@ const typeDefs = gql`
         budget: Float
         startDate: String
         endDate: String
-        leader_id: ID
+        leader_id: String
         status: String      
     }
 
@@ -37,6 +37,7 @@ const typeDefs = gql`
         budget: Float
         startDate: String
         endDate: String
+        leader_id: String
         status: String 
     }
 

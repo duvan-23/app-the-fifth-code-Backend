@@ -28,8 +28,8 @@ const proyectos=new Schema({
         required: true,
       },
       leader_id: {
-        type: Schema.ObjectId,
-        // required: true,
+        type: String,
+        required: true,
       },
       status: {
         type: String,
@@ -42,4 +42,4 @@ const proyectos=new Schema({
       }
     
 })
-module.exports = model('proyectos2',proyectos,"proyectos2")
+module.exports = model('proyectos3',proyectos,"proyectos3")
