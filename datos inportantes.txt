@@ -1,0 +1,3 @@
+mongodb+srv://duvan:735843.@cluster0.kench.mongodb.net/proyecto_ciclo4?retryWrites=true&w=majority
+
+https://docs.google.com/spreadsheets/d/1Nf9qQKrCbO0IHy3mCCmJY4ArreMteues3FjCYjxvh5k/edit#gid=2122245255
