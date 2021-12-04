@@ -77,6 +77,13 @@ const resolvers = {
                 .then(u => "Usuario actualizado")
                 .catch(err => console.log(err));
         },
+        // Eliminar Usuario
+        deleteUsuario: (parent, args, context, info) => {
+            return UsuarioModel.deleteOne({ identification: args.identification })
+                .then(u => "Usuario eliminado")
+                .catch(err => console.log("Falló la eliminación"));
+        },
+
         //crear inscripcion
 
         createInscripcion:async (parent, args, context, info) => {

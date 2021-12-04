@@ -84,6 +84,7 @@ const typeDefs = gql`
         createUsuario(Usuario: UsuarioInput): String
         updateStatusUsuario(identification: String, status: String): String
         updateUsuario(_id: ID, fullName: String, identification: String, email: String, password: String, role: String, status: String): String
+        deleteUsuario(identification: String): String
         updateStatusInscripcion(_id: ID, status: String): String
         deleteInscripcion(_id: ID):  ID
         createInscripcion(Inscripcion: InscripcionInput): String
