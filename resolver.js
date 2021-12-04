@@ -1,5 +1,7 @@
 const ProyectoModel = require('./model/proyectoModel')
 const UsuarioModel = require('./model/usuariosModel')
+let aes256 = require('aes256');
+const key = 'CLAVEDIFICIL';
 
 const resolvers = {
     Query: {
@@ -38,11 +40,12 @@ const resolvers = {
         // Crear usuario
         createUsuario: (parent, args, context, info) => {
             const { fullName, identification, email, password, role, status } = args.Usuario;
+            const encryptedPlainText = aes256.encrypt(key, password);
             const nuevoUsuario = new UsuarioModel();
             nuevoUsuario.fullName = fullName;
             nuevoUsuario.identification = identification;
             nuevoUsuario.email = email;
-            nuevoUsuario.password = password;
+            nuevoUsuario.password = encryptedPlainText;
             nuevoUsuario.role = role;
             nuevoUsuario.status = status;
             return nuevoUsuario.save()
@@ -67,6 +70,11 @@ const resolvers = {
                 })
                 .then(u => "Usuario actualizado")
                 .catch(err => console.log(err));
+        },
+        deleteUsuario: (parent, args, context, info) => {
+            return UsuarioModel.deleteOne({ identification: args.identification })
+                .then(u => "Usuario eliminado")
+                .catch(err => console.log("Falló la eliminación"));
         }
     }
 }
