@@ -1,0 +1,156 @@
+//--------------------------------------proyectos----------------------------
+
+// traer un con filtro
+query {
+    getProyecto(name:"Proyecto 143"){
+        name
+        generalObjective
+        budget
+    }
+}
+//traer varios del mismo campo
+query {
+    proyectos{
+        _id
+        name
+        generalObjective
+        specificObjectives
+        budget
+        startDate
+        endDate
+        leader_id
+        status
+    }
+}
+//crear proyectos
+mutation{
+    createProyecto(Proyecto:{name:"Proyecto 143",
+    generalObjective:"Construir casa",
+    specificObjectives:["crear cocina","crear baño"],
+    budget:12000000,endDate:"2022-08-26T02:16:12.887Z",
+    leader_id:"andres@gmail.com"})
+}
+//actualizar estado
+mutation{
+    activeProyecto(name:"Proyecto 143")
+}
+//eliminar proyecto
+mutation{
+    deleteProyecto(name1:"Proyecto 143")
+}
+//--------------------------------------usuarios----------------------------
+// traer un con filtro
+query {
+    getUsuario(identification: "112233"){
+        fullName
+        email
+        role
+    }
+}
+//traer varios del mismo campo
+query {
+    usuarios{
+        fullName
+        identification
+        email
+        password
+        role
+        status
+    }
+}
+//crear usuarios
+mutation{
+    createUsuario(Usuario:
+        {
+            fullName: "Juan reyes"
+            identification: "12225"
+            email: "Juan@gmail.com"
+            password: "miclave"
+            role: "Estudiante"
+            status: "No Autorizado"
+        }
+    )
+}
+//actualizar status usuario
+mutation{
+    updateStatusUsuario(identification: "12225", status: "Autorizado")
+}
+//Actualizar usuario
+mutation{
+    updateUsuario(_id: "61abb4eb2167d89abfed9341",
+            fullName: "Richard Alexander Acevedo Ramirezs 121212",
+            identification: "112233",
+            email: "richardace98@gmail.com",
+            password: "pass123",
+            role: "Líder",
+            status: "No Autorizado"       
+    )
+}
+//Eliminar usuario
+mutation{
+    deleteUsuario(identification:"112233")
+}
+//--------------------------------------inscripciones----------------------------
+
+// traer un con filtro
+query {
+    getInscripcion(_id:"61983a3cbee27456a08e47b3")
+   {
+        _id
+        project_id
+        user_id
+        status
+        enrollmentDate
+        egressDate
+    }
+}
+//traer varios del mismo campo
+query {
+    inscripciones{
+        _id
+        project_id
+        user_id
+        status
+        enrollmentDate
+        egressDate
+    }
+}
+//crear inscripciones
+mutation{
+    createInscripcion(Inscripcion:{project_id:"Proyecto 11",user_id:
+    "diego@gmail.com",status:"rejected",enrollmentDate:
+    "2022-01-26T02:16:12.887+00:00",egressDate:"2046-01-26T02:16:12.887+00:00"})
+}
+//actualizar estatus
+mutation{
+updateStatusInscripcion(_id: "61abcb9cfe2f7a75101d5d10",status: "acepted")
+}
+//eliminar inscripcion
+mutation{
+   deleteInscripcion(_id: "61abcb9cfe2f7a75101d5d10")
+}
+
+//--------------------------------------avances----------------------------
+
+//traer varios del mismo campo
+    avances{
+        _id
+        project_id
+        description
+        observations
+    }
+}
+//crear avances
+mutation{
+    createAvance(Avance:{project_id:"Proyecto 11",
+    description:"Construcción de puente 2",
+    observations:"Pendiente logística 2"})
+}
+//actualizar descripcion
+mutation{
+    updateAvance(_id:"61abbda03466930f5e6adeec", description:"Construir casa")
+}
+//eliminar avance
+mutation{
+    deleteAvance(proyecto1:"Proyecto 11")
+}
