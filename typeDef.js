@@ -30,6 +30,14 @@ const typeDefs = gql`
         egressDate: String
          
     }
+
+    type Avance{
+        _id: ID
+        project_id: String
+        addDate: String
+        description: String
+        observations: String
+    }
     
     type Query{
         proyectos: [Proyecto]
@@ -39,6 +47,8 @@ const typeDefs = gql`
         getUsuario(identification: String): Usuario
         inscripciones: [Inscripcion]
         getInscripcion(_id: ID):Inscripcion
+        avances: [Avance]
+        getAvances(project_id: ID): Avance
     }
 
     input ProyectoInput{
@@ -77,6 +87,13 @@ const typeDefs = gql`
     egressDate: String
     }
 
+    input AvanceInput{
+        project_id: String
+        addDate: String
+        description: String
+        observations: String
+    }
+
     type Mutation{
         createProyecto(Proyecto:ProyectoInput): String 
         activeProyecto(name:String): String 
@@ -88,6 +105,11 @@ const typeDefs = gql`
         updateStatusInscripcion(_id: ID, status: String): String
         deleteInscripcion(_id: ID):  ID
         createInscripcion(Inscripcion: InscripcionInput): String
+        createAvance(Avance:AvanceInput): String
+        updateAvance(_id:ID, description:String): String
+        updateObservations(observations:String):String
+        deleteAvance(proyecto1:String): String
+        deleteObservation(observation1:String): String
         
     }
     

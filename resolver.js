@@ -2,6 +2,7 @@ const ProyectoModel = require('./model/proyectoModel')
 const UsuarioModel = require('./model/usuariosModel')
 const InscripcionesModel = require('./model/inscripcionesModel');
 const inscripcionesModel = require('./model/inscripcionesModel');
+const AvancesModel = require('./model/avancesModel')
 let aes256 = require('aes256');
 const key = 'CLAVEDIFICIL';
 
@@ -12,7 +13,9 @@ const resolvers = {
         usuarios: async () => await UsuarioModel.find({}),
         getUsuario: async (parent, args, context, info) => await UsuarioModel.findOne({ identification: args.identification }),
         inscripciones: async () => await InscripcionesModel.find({}),
-        getInscripcion: async (parent, args, context, info) => await InscripcionesModel.findOne({ _id: args._id })
+        getInscripcion: async (parent, args, context, info) => await InscripcionesModel.findOne({ _id: args._id }),
+        avances: async () => await AvancesModel.find({}),
+        getAvances: async (parent, args, context, info) => await AvancesModel.findOne({ project_id: args.project_id })
     },
     Mutation: {
         //crear proyecto nuevo
@@ -115,7 +118,45 @@ const resolvers = {
             return inscripcionesModel.deleteOne({ _id: args._id })
                 .then(u => "Inscripcion Eliminado")
                 .catch(err => console.log("Fallo La Eliminación"));
-        }
+        },
+        // Introducir avance
+        createAvance: async (parent, args, context, info) => {
+            const { project_id, addDate, description, observations } = args.Avance;
+            const nuevoAvance = new AvancesModel();
+            const proyect1 =  await ProyectoModel.findOne({ name: project_id });
+            //console.log(proyect1.name);
+            nuevoAvance.project_id = proyect1.name;
+            if (addDate) { nuevoAvance.addDate = addDate; } else { nuevoAvance.addDate = new Date(); }
+            nuevoAvance.description = description;
+            nuevoAvance.observations = observations;
+            return nuevoAvance.save()
+                .then(mensaje => "Avance creado correctamente")
+                .catch(err => console.log(err));
+        },
+        //Actualizar descripción de avances
+        updateAvance: (parent, args, context, info) => {
+            return AvancesModel.updateOne({ _id: args._id}, { description: args.description } )
+                .then(u => "Avance Actualizado")
+                .catch(err => console.log("Error"));
+        },
+        //Actualizar observaciones de avances
+        updateObservations: (parent, args, context, info) => {
+            return AvancesModel.updateOne({ observations: args.observations }, { status: args.observations } )
+                .then(u => "Observación Actualizada")
+                .catch(err => console.log("Error"));
+        },
+        //Borrar un avance
+        deleteAvance: (parent, args, context, info) => {
+            return AvancesModel.deleteOne({ project_id: args.proyecto1})
+                .then(u => "Avance Eliminado")
+                .catch(err => console.log("Fallo La Eliminación"));
+        },
+        //Borrar una observación
+        deleteObservation: (parent, args, context, info) => {
+            return AvancesModel.deleteOne({ observations: args.observation1 })
+                .then(u => "Obervación Eliminada")
+                .catch(err => console.log("Fallo La Eliminación"));
+        },
     }
 }
 module.exports = resolvers
