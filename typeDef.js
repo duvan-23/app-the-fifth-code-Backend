@@ -21,6 +21,15 @@ const typeDefs = gql`
         role: String
         status: String
     }
+    type Inscripcion{
+        _id: ID
+        project_id: ID
+        user_id: ID
+        status: String
+        enrollmentDate: String
+        egressDate: String
+         
+    }
     
     type Query{
         proyectos: [Proyecto]
@@ -28,6 +37,8 @@ const typeDefs = gql`
         getProyecto(name:String): Proyecto
         usuarios: [Usuario]
         getUsuario(identification: String): Usuario
+        inscripciones: [Inscripcion]
+        getInscripcion(_id: ID):Inscripcion
     }
 
     input ProyectoInput{
@@ -40,6 +51,15 @@ const typeDefs = gql`
         leader_id: String
         status: String 
     }
+    input ProyectoInput{
+        name: String
+        generalObjective: String
+        specificObjectives: [String]
+        budget: Float
+        startDate: String
+        endDate: String
+        status: String 
+    }
 
     input UsuarioInput{
         fullName: String
@@ -49,6 +69,13 @@ const typeDefs = gql`
         role: String
         status: String
     }
+    input InscripcionInput{
+    project_id: ID
+    user_id: ID
+    status: String
+    enrollmentDate: String
+    egressDate: String
+    }
 
     type Mutation{
         createProyecto(Proyecto:ProyectoInput): String 
@@ -57,6 +84,10 @@ const typeDefs = gql`
         createUsuario(Usuario: UsuarioInput): String
         updateStatusUsuario(identification: String, status: String): String
         updateUsuario(_id: ID, fullName: String, identification: String, email: String, password: String, role: String, status: String): String
+        updateStatusInscripcion(_id: ID, status: String): String
+        deleteInscripcion(_id: ID):  ID
+        createInscripcion(Inscripcion: InscripcionInput): String
+        
     }
     
 `

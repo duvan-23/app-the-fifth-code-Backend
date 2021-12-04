@@ -1,12 +1,16 @@
 const ProyectoModel = require('./model/proyectoModel')
 const UsuarioModel = require('./model/usuariosModel')
+const InscripcionesModel = require('./model/inscripcionesModel');
+const inscripcionesModel = require('./model/inscripcionesModel');
 
 const resolvers = {
     Query: {
         proyectos: async () => await ProyectoModel.find({}),
         getProyecto: async (parent, args, context, info) => await ProyectoModel.findOne({ name: args.name }),
         usuarios: async () => await UsuarioModel.find({}),
-        getUsuario: async (parent, args, context, info) => await UsuarioModel.findOne({ identification: args.identification })
+        getUsuario: async (parent, args, context, info) => await UsuarioModel.findOne({ identification: args.identification }),
+        inscripciones: async () => await InscripcionesModel.find({}),
+        getInscripcion: async (parent, args, context, info) => await InscripcionesModel.findOne({ _id: args._id })
     },
     Mutation: {
         //crear proyecto nuevo
@@ -69,6 +73,38 @@ const resolvers = {
                 })
                 .then(u => "Usuario actualizado")
                 .catch(err => console.log(err));
+        },
+        //crear inscripcion
+
+        createInscripcion:async (parent, args, context, info) => {
+            const { project_id, user_id, status, enrollmentDate, egressDate } = args.Inscripcion;
+            const nuevoIncripcion = new InscripcionesModel();
+            const proyect1 =  await ProyectoModel.findOne({ name: project_id });
+            const user =  await UsuarioModel.findOne({ email: user_id });
+            nuevoIncripcion.project_id =proyect1._id;
+            nuevoIncripcion.user_id = user._id;
+            nuevoIncripcion.status = status;
+            nuevoIncripcion.enrollmentDate = enrollmentDate;
+            nuevoIncripcion.egressDate = egressDate;
+            
+           // if (enrollmentDate) { nuevoIncripcion.enrollmentDate = enrollmentDate; } else { nuevoIncripcion.enrollmentDate = new Date(); }
+            // nuevoIncripcion.egressDate = egressDate;
+            return nuevoIncripcion.save().then(u => "Incripcion creada")
+                .catch(err => console.log("Fallo la Inscripcion"));
+            //.catch(err => console.log("err")) si quierover cual es el error
+        },
+        ///////////
+
+        // Actualizar status de incripcion
+        updateStatusInscripcion: (parent, args, context, info) => {
+            return inscripcionesModel.updateOne({ _id: args._id }, { status: args.status })
+                .then(u => "Status de usuario actualizado")
+                .catch(err => console.log("Falló la actualización"));
+        },
+        deleteInscripcion: (parent, args, context, info) => {
+            return inscripcionesModel.deleteOne({ _id: args._id })
+                .then(u => "Inscripcion Eliminado")
+                .catch(err => console.log("Fallo La Eliminación"));
         }
     }
 }
