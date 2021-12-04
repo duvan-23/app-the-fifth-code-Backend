@@ -2,6 +2,8 @@ const ProyectoModel = require('./model/proyectoModel')
 const UsuarioModel = require('./model/usuariosModel')
 const InscripcionesModel = require('./model/inscripcionesModel');
 const inscripcionesModel = require('./model/inscripcionesModel');
+let aes256 = require('aes256');
+const key = 'CLAVEDIFICIL';
 
 const resolvers = {
     Query: {
@@ -44,16 +46,17 @@ const resolvers = {
         // Crear usuario
         createUsuario: (parent, args, context, info) => {
             const { fullName, identification, email, password, role, status } = args.Usuario;
+            const encryptedPlainText = aes256.encrypt(key, password);
             const nuevoUsuario = new UsuarioModel();
             nuevoUsuario.fullName = fullName;
             nuevoUsuario.identification = identification;
             nuevoUsuario.email = email;
-            nuevoUsuario.password = password;
+            nuevoUsuario.password = encryptedPlainText;
             nuevoUsuario.role = role;
             nuevoUsuario.status = status;
             return nuevoUsuario.save()
                 .then(mensaje => "Usuario creado")
-                .catch(err => console.log("Falló la creación"));
+                .catch(err => console.log(err));
         },
         // Actualizar status usuario
         updateStatusUsuario: (parent, args, context, info) => {

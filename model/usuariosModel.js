@@ -1,9 +1,9 @@
 const { Schema, model } = require('mongoose')
 
 const usuarios3 = new Schema({
-    _id:{
-        typetype: Schema.ObjectId,
-    },
+    // _id:{
+    //     typetype: Schema.ObjectId,
+    // },
     fullName: {
         type: String,
         unique: true,
