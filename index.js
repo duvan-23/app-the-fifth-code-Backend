@@ -3,7 +3,7 @@ const typeDefs = require('./typeDef')
 const resolvers = require('./resolver')
 //mm
 const express = require('express')
-
+const  authRoute = require('./routes/auth.routes')
 /*
 const proyectoAguas =new ProyectoModel({
     name:'Proyecto de aguas residuales'
@@ -36,10 +36,12 @@ const iniciarServidor =async()=>{
             resolvers
         });
     await apollo.start()
-    apollo.applyMiddleware({app:api,path:'/consulta'})
-    api.use((request, response)=>{
+    apollo.applyMiddleware({app:api})
+    /*api.use((request, response)=>{
         response.send('Hola')
-    })
+    })*/
+    api.use(express.json())
+    api.use('/api', authRoute)
     api.listen('9091',()=>console.log('Inicio Server'))
 }
 iniciarServidor()
