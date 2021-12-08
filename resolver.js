@@ -46,6 +46,21 @@ const resolvers = {
                 .then(u => "Proyecto Eliminado")
                 .catch(err => console.log("Fallo La Eliminación"));
         },
+        insertUserToProyecto: async(parent, args, context, info) => {
+            const user = await UsuarioModel.findOne({identification:args.identification});
+            const proyecto = await ProyectoModel.findOne({name: args.name});
+            if(user && user.status ==="Autorizado"){
+                if(proyecto.integrantes.find(i => i ==user.fullName)){
+                    return "El usuario ya pertenece al proyecto indicado"
+                }else{
+                    return ProyectoModel.updateOne({ name: args.name }, { $push:{integrantes:user.fullName} })
+                        .then(x=> "agregado correctamente")
+                        .catch(err => console.log(err));
+                }
+            }else{
+                return "Usuario no esta activo"
+            }
+        },
         // Crear usuario
         createUsuario: (parent, args, context, info) => {
             const { fullName, identification, email, password, role, status } = args.Usuario;
