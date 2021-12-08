@@ -10,6 +10,7 @@ const typeDefs = gql`
         endDate: String
         leader_id: String
         status: String      
+        integrantes: [String]
     }
 
     type Usuario{
@@ -60,6 +61,7 @@ const typeDefs = gql`
         endDate: String
         leader_id: String
         status: String 
+        integrantes: [String]
     }
     input ProyectoInput{
         name: String
@@ -110,7 +112,7 @@ const typeDefs = gql`
         updateObservations(observations:String):String
         deleteAvance(proyecto1:String): String
         deleteObservation(observation1:String): String
-        
+        insertUserToProyecto(identification:String,name:String):String
     }
     
 `

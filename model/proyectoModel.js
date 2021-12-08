@@ -39,7 +39,8 @@ const proyectos=new Schema({
       },
       phase: {
         type: String
-      }
+      },
+      integrantes:[String]
     
 })
 module.exports = model('proyectos3',proyectos,"proyectos3")
