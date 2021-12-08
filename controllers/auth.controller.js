@@ -22,10 +22,12 @@ const singIn = async (request, response) => {
             return response.status(401).json({response: "Credenciales invalidas"})
         }
 
-        const token = jwt.sign({
+
+        //Firma del token
+        const token = jwt.sign({ 
             role: usuario.role
         }, key, {expiresIn: 60 * 60 * 2})
-
+        //Entrega del token luego del logueo exitoso
         response.status(200).json({jwt: token})
     }catch(error){
         console.log(error)
