@@ -4,6 +4,7 @@ let aes256 = require('aes256');
 const key = 'CLAVEDIFICIL';
 /*
     401 -> no autorizado
+    403 -> No tiene permisos suficientes
     404 -> not found
     400 -> Enviaste algo que no era o bad request
     500 -> Exploto el servidor
