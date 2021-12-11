@@ -138,7 +138,6 @@ const resolvers = {
                 //.catch(err => console.log("err")) si quierover cual es el error
             }
         },
-        ///////////
 
         // Actualizar status de incripcion
         updateStatusInscripcion: (parent, args, context, info) => {
