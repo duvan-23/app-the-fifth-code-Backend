@@ -121,6 +121,7 @@ const typeDefs = gql`
         insertUserToProyecto(identification:String,name:String):String
         updatePhaseProyectos(name: String, phase: String): String
         updateProyecto(_id: ID, name: String, generalObjective: String, specificObjectives: String, budget: Float): String
+        autenticar(usuario:String, clave:String): String
     }
     
 `
