@@ -40,11 +40,11 @@ const resolvers = {
         },
         //actualizar un campo de proyectos
         activeProyecto: (parent, args, context, info) => {
-            if(isLeader(context.rol)){
+            // if(isLeader(context.rol)){
                 return ProyectoModel.updateOne({ name: args.name }, { status: "ACTIVE" })
                 .then(u => "Proyecto Actualizado")
                 .catch(err => console.log("Fallo la Activación"));
-            }
+            // }
         },
         //borrar un proyecto
         deleteProyecto: (parent, args, context, info) => {
