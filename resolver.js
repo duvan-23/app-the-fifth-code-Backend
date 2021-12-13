@@ -13,7 +13,7 @@ const resolvers = {
         usuarios: async () => await UsuarioModel.find({}),
         getUsuario: async (parent, args, context, info) => await UsuarioModel.findOne({ identification: args.identification }),
         inscripciones: async () => await InscripcionesModel.find({}),
-        getInscripcion: async (parent, args, context, info) => await InscripcionesModel.findOne({ _id: args._id }),
+        getInscripcion: async (parent, args, context, info) => await InscripcionesModel.findOne({ role: args.role }),
         avances: async () => await AvancesModel.find({}),
         getAvances: async (parent, args, context, info) => await AvancesModel.findOne({ project_id: args.project_id })
     },
@@ -105,13 +105,13 @@ const resolvers = {
         //crear inscripcion
 
         createInscripcion:async (parent, args, context, info) => {
-            const { project_id, user_id, status, enrollmentDate, egressDate } = args.Inscripcion;
+            const { project_id, user_id,enrollmentDate, egressDate,role } = args.Inscripcion;
             const nuevoIncripcion = new InscripcionesModel();
             const proyect1 =  await ProyectoModel.findOne({ name: project_id });
             const user =  await UsuarioModel.findOne({ email: user_id });
-            nuevoIncripcion.project_id =proyect1._id;
-            nuevoIncripcion.user_id = user._id;
-            nuevoIncripcion.status = status;
+            nuevoIncripcion.project_id =proyect1.name;
+            nuevoIncripcion.user_id = user.fullName;
+            nuevoIncripcion.role = user.role;
             nuevoIncripcion.enrollmentDate = enrollmentDate;
             nuevoIncripcion.egressDate = egressDate;
             
@@ -125,10 +125,12 @@ const resolvers = {
 
         // Actualizar status de incripcion
         updateStatusInscripcion: (parent, args, context, info) => {
-            return inscripcionesModel.updateOne({ _id: args._id }, { status: args.status })
+            return inscripcionesModel.updateOne({user_id: args.user_id }, { status: args.status })
                 .then(u => "Status de usuario actualizado")
                 .catch(err => console.log("Falló la actualización"));
         },
+
+
         deleteInscripcion: (parent, args, context, info) => {
             return inscripcionesModel.deleteOne({ _id: args._id })
                 .then(u => "Inscripcion Eliminado")

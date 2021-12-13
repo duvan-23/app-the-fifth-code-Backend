@@ -24,11 +24,12 @@ const typeDefs = gql`
     }
     type Inscripcion{
         _id: ID
-        project_id: ID
-        user_id: ID
+        project_id: String
+        user_id: String
         status: String
         enrollmentDate: String
         egressDate: String
+        role: String 
          
     }
 
@@ -82,11 +83,13 @@ const typeDefs = gql`
         status: String
     }
     input InscripcionInput{
-    project_id: ID
-    user_id: ID
+    project_id: String
+    user_id: String
     status: String
     enrollmentDate: String
     egressDate: String
+    role: String
+     
     }
 
     input AvanceInput{
@@ -104,7 +107,7 @@ const typeDefs = gql`
         updateStatusUsuario(identification: String, status: String): String
         updateUsuario(_id: ID, fullName: String, identification: String, email: String, password: String, role: String, status: String): String
         deleteUsuario(identification: String): String
-        updateStatusInscripcion(_id: ID, status: String): String
+        updateStatusInscripcion(user_id: String, status: String): String
         deleteInscripcion(_id: ID):  ID
         createInscripcion(Inscripcion: InscripcionInput): String
         createAvance(Avance:AvanceInput): String
