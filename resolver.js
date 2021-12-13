@@ -25,7 +25,7 @@ const resolvers = {
     Mutation: {
         //crear proyecto nuevo
         createProyecto: async (parent, args, context, info) => {
-            if(isLeader(context.rol)){
+            //if(isLeader(context.rol)){
                 const { name, generalObjective, specificObjectives, budget, startDate, endDate, leader_id} = args.Proyecto;
                 const nuevoProyecto = new ProyectoModel();
                 const user = await UsuarioModel.findOne({email:leader_id});
@@ -39,7 +39,7 @@ const resolvers = {
                 return nuevoProyecto.save().then(u => "Proyecto creado")    
                     .catch(err => console.log(err));
                 //.catch(err => console.log("err")) si quierover cual es el error
-            }
+           // }
         },
         //actualizar un campo de proyectos
         activeProyecto: (parent, args, context, info) => {
@@ -58,7 +58,7 @@ const resolvers = {
             }
         },
         insertUserToProyecto: async(parent, args, context, info) => {
-            if(isLeader(context.rol)){
+            //if(isLeader(context.rol)){
                 const user = await UsuarioModel.findOne({identification:args.identification});
                 const proyecto = await ProyectoModel.findOne({name: args.name});
                 if(user && user.status ==="Autorizado"){
@@ -72,7 +72,7 @@ const resolvers = {
                 }else{
                     return "Usuario no esta activo"
                 }
-            }
+            //}
         },
         updatePhaseProyectos: (parent, args, context, info) => {
             return ProyectoModel.updateOne({ name: args.name }, { phase: args.phase })
@@ -137,7 +137,7 @@ const resolvers = {
         //crear inscripcion
 
         createInscripcion:async (parent, args, context, info) => {
-            if(isStudent(context.rol)){
+            //if(isStudent(context.rol)){
                 const { project_id, user_id, status, enrollmentDate, egressDate } = args.Inscripcion;
                 const nuevoIncripcion = new InscripcionesModel();
                 const proyect1 =  await ProyectoModel.findOne({ name: project_id });
@@ -153,7 +153,7 @@ const resolvers = {
                 return nuevoIncripcion.save().then(u => "Incripcion creada")
                     .catch(err => console.log("Fallo la Inscripcion"));
                 //.catch(err => console.log("err")) si quierover cual es el error
-            }
+           // }
         },
 
         // Actualizar status de incripcion
@@ -173,7 +173,7 @@ const resolvers = {
         },
         // Introducir avance
         createAvance: async (parent, args, context, info) => {
-            if(isStudent(context.rol)){
+            //if(isStudent(context.rol)){
                 const { project_id, addDate, description, observations } = args.Avance;
                 const nuevoAvance = new AvancesModel();
                 const proyect1 =  await ProyectoModel.findOne({ name: project_id });
@@ -185,40 +185,40 @@ const resolvers = {
                 return nuevoAvance.save()
                     .then(mensaje => "Avance creado correctamente")
                     .catch(err => console.log(err));
-            }
+           // }
         },
         //Actualizar descripción de avances
         updateAvance: (parent, args, context, info) => {
-            if(isStudent(context.rol)){
+            //if(isStudent(context.rol)){
                 return AvancesModel.updateOne({ project_id: args.project_id}, { description: args.description } )
                     .then(u => "Avance Actualizado")
                     .catch(err => console.log("Error"));
-            }
+            //}
         },
         //Actualizar observaciones de avances
         updateObservations: (parent, args, context, info) => {
-            if(isLeader(context.rol)){
+           // if(isLeader(context.rol)){
                 return AvancesModel.updateOne({ observations: args.observations }, { status: args.observations } )
                     .then(u => "Observación Actualizada")
                     .catch(err => console.log("Error"));
-            }
+            //}
         },
         //Borrar un avance
         deleteAvance: (parent, args, context, info) => {
-            if(isStudent(context.rol)){
+           // if(isStudent(context.rol)){
                 return AvancesModel.deleteOne({ project_id: args.proyecto1})
                     .then(u => "Avance Eliminado")
                     .catch(err => console.log("Fallo La Eliminación"));
-            }
+            //}
         },
 
         //Borrar una observación
         deleteObservation: (parent, args, context, info) => {
-            if(isLeader(context.rol)){
+            //if(isLeader(context.rol)){
                 return AvancesModel.deleteOne({ observations: args.observation1 })
                     .then(u => "Obervación Eliminada")
                     .catch(err => console.log("Fallo La Eliminación"));
-            }
+            //}
         },
 
 
