@@ -113,6 +113,7 @@ const typeDefs = gql`
         deleteAvance(proyecto1:String): String
         deleteObservation(observation1:String): String
         insertUserToProyecto(identification:String,name:String):String
+        autenticar(usuario:String, clave:String): String
     }
     
 `

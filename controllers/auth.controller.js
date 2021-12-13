@@ -13,14 +13,14 @@ const key = 'CLAVEDIFICIL';
 
 const singIn = async (request, response) => {
     try{
-        const usuario = await Usuario.findOne({email: request.body?.email})
+        const usuario = await Usuario.findOne({email: args.usuario})
         if(!usuario){
-            return response.status(401).json({response: "Credenciales invalidas"})
+            return"Credenciales invalidas"
         }
         
         const claveDesencriptada = aes256.decrypt(key, usuario.password)
-        if(request.body?.password != claveDesencriptada){
-            return response.status(401).json({response: "Credenciales invalidas"})
+        if(args.clave != claveDesencriptada){
+            return "Credenciales invalidas"
         }
 
 
@@ -29,7 +29,7 @@ const singIn = async (request, response) => {
             role: usuario.role
         }, key, {expiresIn: 60 * 60 * 2})
         //Entrega del token luego del logueo exitoso
-        response.status(200).json({jwt: token})
+        return token
     }catch(error){
         console.log(error)
         response.status(500).json({response:"Contacte al admin"})
