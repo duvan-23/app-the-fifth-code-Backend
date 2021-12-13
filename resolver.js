@@ -202,6 +202,29 @@ const resolvers = {
                     .catch(err => console.log("Fallo La Eliminación"));
             }
         },
+        autenticar: async(parent, args, context, info) => {
+            try {
+                const usuario = await UsuarioModel.findOne({ email: args.usuario })
+                const claveDesencriptada = aes256.decrypt(key, usuario.password)
+                
+                if (!usuario) {
+                    return  "Verique usuario y contrasena" 
+                }
+
+                
+                if (args.clave != claveDesencriptada) {
+                    return "Verique usuario y contrasena"
+                }
+
+                const token = jwt.sign({
+                    rol: usuario.perfil
+                }, key, { expiresIn: 60 * 60 * 2 })
+
+                return token 
+            } catch (error) {
+                console.log(error)
+            }
+        }
     }
 }
 module.exports = resolvers

@@ -36,20 +36,20 @@ const iniciarServidor =async()=>{
     const apollo= new ApolloServer(
         {
             typeDefs,
-            resolvers,
-            context: ({req}) => {
-                const token = req.headers.authorization;
-                try{
-                    const perfil = jwt.verify(token, key)
-                    if(perfil){
-                        rol = perfil.role
-                        return {rol}
-                    }
-                }catch(error){
-                    console.log(error)
-                }
-                return{}
-            }
+            resolvers
+            // context: ({req}) => {
+            //     const token = req.headers.authorization;
+            //     try{
+            //         const perfil = jwt.verify(token, key)
+            //         if(perfil){
+            //             rol = perfil.role
+            //             return {rol}
+            //         }
+            //     }catch(error){
+            //         console.log(error)
+            //     }
+            //     return{}
+            
         });
     await apollo.start()
     apollo.applyMiddleware({app:api})
