@@ -1,18 +1,19 @@
 const { gql } = require('apollo-server-express')
 const typeDefs = gql`
+  scalar Date
     type Proyecto{
         _id: ID
         name: String
         generalObjective: String
         specificObjectives: [String]
         budget: Float
-        startDate: String
-        endDate: String
+        startDate: Date
+        endDate: Date
         leader_id: String
-        status: String      
+        status: String  
+        phase: String   
         integrantes: [String]
     }
-
     type Usuario{
         _id: ID
         fullName: String
@@ -27,16 +28,15 @@ const typeDefs = gql`
         project_id: String
         user_id: String
         status: String
-        enrollmentDate: String
-        egressDate: String
+        enrollmentDate: Date
+        egressDate: Date
         role: String 
          
     }
-
     type Avance{
         _id: ID
         project_id: String
-        addDate: String
+        addDate: Date
         description: String
         observations: String
     }
@@ -46,13 +46,12 @@ const typeDefs = gql`
         proyecto(name: String): Proyecto
         getProyecto(name:String): Proyecto
         usuarios: [Usuario]
-        getUsuario(identification: String): Usuario
+        getUsuario(_id: ID): Usuario
         inscripciones: [Inscripcion]
         getInscripcion(_id: ID):Inscripcion
         avances: [Avance]
-        getAvances(project_id: ID): Avance
+        getAvances(project_id: String): Avance
     }
-
     input ProyectoInput{
         name: String
         generalObjective: String
@@ -62,6 +61,7 @@ const typeDefs = gql`
         endDate: String
         leader_id: String
         status: String 
+        phase: String
         integrantes: [String]
     }
     input ProyectoInput{
@@ -71,9 +71,11 @@ const typeDefs = gql`
         budget: Float
         startDate: String
         endDate: String
+        leader_id: String
         status: String 
+        phase: String
+        integrantes: [String]
     }
-
     input UsuarioInput{
         fullName: String
         identification: String
@@ -83,22 +85,20 @@ const typeDefs = gql`
         status: String
     }
     input InscripcionInput{
-    project_id: String
-    user_id: String
-    status: String
-    enrollmentDate: String
-    egressDate: String
-    role: String
-     
-    }
-
+        project_id: String
+        user_id: String
+        status: String
+        enrollmentDate: String
+        egressDate: String
+        role: String
+         
+        }
     input AvanceInput{
         project_id: String
-        addDate: String
+        addDate: Date
         description: String
         observations: String
     }
-
     type Mutation{
         createProyecto(Proyecto:ProyectoInput): String 
         activeProyecto(name:String): String 
@@ -111,11 +111,14 @@ const typeDefs = gql`
         deleteInscripcion(_id: ID):  ID
         createInscripcion(Inscripcion: InscripcionInput): String
         createAvance(Avance:AvanceInput): String
-        updateAvance(_id:ID, description:String): String
+        updateAvance(project_id:String, description:String, observations:String): String
         updateObservations(observations:String):String
         deleteAvance(proyecto1:String): String
         deleteObservation(observation1:String): String
         insertUserToProyecto(identification:String,name:String):String
+        updatePhaseProyectos(name: String, phase: String): String
+        updateProyecto(_id: ID, name: String, generalObjective: String, specificObjectives: String, budget: Float): String
+        autenticar(usuario:String, clave:String): String
     }
     
 `
