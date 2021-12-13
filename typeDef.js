@@ -1,18 +1,18 @@
 const { gql } = require('apollo-server-express')
 const typeDefs = gql`
-
-    scalar Date
-
+  scalar Date
     type Proyecto{
         _id: ID
         name: String
         generalObjective: String
         specificObjectives: [String]
         budget: Float
-        startDate: String
-        endDate: String
+        startDate: Date
+        endDate: Date
         leader_id: String
-        status: String      
+        status: String  
+        phase: String   
+        integrantes: [String]
     }
 
     type Usuario{
@@ -47,7 +47,7 @@ const typeDefs = gql`
         proyecto(name: String): Proyecto
         getProyecto(name:String): Proyecto
         usuarios: [Usuario]
-        getUsuario(identification: String): Usuario
+        getUsuario(_id: ID): Usuario
         inscripciones: [Inscripcion]
         getInscripcion(_id: ID):Inscripcion
         avances: [Avance]
@@ -59,19 +59,24 @@ const typeDefs = gql`
         generalObjective: String
         specificObjectives: [String]
         budget: Float
-        startDate: Date
-        endDate: Date
+        startDate: String
+        endDate: String
         leader_id: String
         status: String 
+        phase: String
+        integrantes: [String]
     }
     input ProyectoInput{
         name: String
         generalObjective: String
         specificObjectives: [String]
         budget: Float
-        startDate: Date
-        endDate: Date
+        startDate: String
+        endDate: String
+        leader_id: String
         status: String 
+        phase: String
+        integrantes: [String]
     }
 
     input UsuarioInput{
@@ -87,7 +92,7 @@ const typeDefs = gql`
     user_id: ID
     status: String
     enrollmentDate: String
-    egressDate: Date
+    egressDate: String
     }
 
     input AvanceInput{
@@ -110,9 +115,13 @@ const typeDefs = gql`
         createInscripcion(Inscripcion: InscripcionInput): String
         createAvance(Avance:AvanceInput): String
         updateAvance(project_id:String, description:String, observations:String): String
-        deleteAvance(proyecto1:String, observation1:String): String
-    
-        
+        updateObservations(observations:String):String
+        deleteAvance(proyecto1:String): String
+        deleteObservation(observation1:String): String
+        insertUserToProyecto(identification:String,name:String):String
+        updatePhaseProyectos(name: String, phase: String): String
+        updateProyecto(_id: ID, name: String, generalObjective: String, specificObjectives: String, budget: Float): String
+        autenticar(usuario:String, clave:String): String
     }
     
 `
