@@ -3,19 +3,19 @@ const {Schema, model}=require('mongoose')
 
 const inscripciones=new Schema({
     project_id: {
-        type: Schema.ObjectId,
-        unique:true,
+        type: String,
+       // unique:true,
         required: true,
       },
       user_id: {
-        type: Schema.ObjectId,
-        unique:true,
+        type: String,
+       // unique:true,
         required: true,
       },
       status: {
         type: String,
-        enum: ['acepted', 'rejected'],
-        default:"INACTIVE",
+        enum: ['acepted', 'rejected','Pending'],
+        default:"Pending",
         required: true,
       },
       enrollmentDate: {
@@ -25,7 +25,11 @@ const inscripciones=new Schema({
       egressDate: {
         type: Date,
         required: true,
-      }
+      },
+      role: {
+        type: String,
+        required: true
+    }
     
 })
-module.exports = model('inscripciones',inscripciones,"inscripciones")
+module.exports = model('inscripciones1',inscripciones,"inscripciones1")
