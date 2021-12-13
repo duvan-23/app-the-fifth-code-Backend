@@ -17,7 +17,10 @@ const resolvers = {
         inscripciones: async () => await InscripcionesModel.find({}),
         getInscripcion: async (parent, args, context, info) => await InscripcionesModel.findOne({ _id: args._id }),
         avances: async () => await AvancesModel.find({}),
-        getAvances: async (parent, args, context, info) => await AvancesModel.findOne({ project_id: args.project_id })
+        getAvances: async (parent, args, context, info) => await AvancesModel.findOne({ project_id: args.project_id }),
+        inscripciones: async () => await InscripcionesModel.find({}),
+        getInscripcion: async (parent, args, context, info) => await InscripcionesModel.findOne({ role: args.role })
+
     },
     Mutation: {
         //crear proyecto nuevo
@@ -187,7 +190,7 @@ const resolvers = {
         //Actualizar descripción de avances
         updateAvance: (parent, args, context, info) => {
             if(isStudent(context.rol)){
-                return AvancesModel.updateOne({ _id: args._id}, { description: args.description } )
+                return AvancesModel.updateOne({ project_id: args.project_id}, { description: args.description } )
                     .then(u => "Avance Actualizado")
                     .catch(err => console.log("Error"));
             }
@@ -208,6 +211,7 @@ const resolvers = {
                     .catch(err => console.log("Fallo La Eliminación"));
             }
         },
+
         //Borrar una observación
         deleteObservation: (parent, args, context, info) => {
             if(isLeader(context.rol)){
@@ -216,6 +220,45 @@ const resolvers = {
                     .catch(err => console.log("Fallo La Eliminación"));
             }
         },
+
+
+        
+        //crear inscripcion
+
+        createInscripcion:async (parent, args, context, info) => {
+            const { project_id, user_id,enrollmentDate, egressDate,role } = args.Inscripcion;
+            const nuevoIncripcion = new InscripcionesModel();
+            const proyect1 =  await ProyectoModel.findOne({ name: project_id });
+            const user =  await UsuarioModel.findOne({ email: user_id });
+            nuevoIncripcion.project_id =proyect1.name;
+            nuevoIncripcion.user_id = user.fullName;
+            nuevoIncripcion.role = user.role;
+            nuevoIncripcion.enrollmentDate = enrollmentDate;
+            nuevoIncripcion.egressDate = egressDate;
+            
+           // if (enrollmentDate) { nuevoIncripcion.enrollmentDate = enrollmentDate; } else { nuevoIncripcion.enrollmentDate = new Date(); }
+            // nuevoIncripcion.egressDate = egressDate;
+            return nuevoIncripcion.save().then(u => "Incripcion creada")
+                .catch(err => console.log("Fallo la Inscripcion"));
+            //.catch(err => console.log("err")) si quierover cual es el error
+        },
+        ///////////
+
+        // Actualizar status de incripcion
+        updateStatusInscripcion: (parent, args, context, info) => {
+            return inscripcionesModel.updateOne({user_id: args.user_id }, { status: args.status })
+                .then(u => "Status de usuario actualizado")
+                .catch(err => console.log("Falló la actualización"));
+        },
+
+
+        deleteInscripcion: (parent, args, context, info) => {
+            return inscripcionesModel.deleteOne({ _id: args._id })
+                .then(u => "Inscripcion Eliminado")
+                .catch(err => console.log("Fallo La Eliminación"));
+        },
+
+
         autenticar: async(parent, args, context, info) => {
             try {
                 const usuario = await UsuarioModel.findOne({ email: args.usuario })
@@ -239,6 +282,8 @@ const resolvers = {
                 console.log(error)
             }
         }
+
+
     }
 }
 module.exports = resolvers

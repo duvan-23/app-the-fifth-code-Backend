@@ -14,7 +14,6 @@ const typeDefs = gql`
         phase: String   
         integrantes: [String]
     }
-
     type Usuario{
         _id: ID
         fullName: String
@@ -26,18 +25,18 @@ const typeDefs = gql`
     }
     type Inscripcion{
         _id: ID
-        project_id: ID
-        user_id: ID
+        project_id: String
+        user_id: String
         status: String
-        enrollmentDate: String
-        egressDate: String
+        enrollmentDate: Date
+        egressDate: Date
+        role: String 
          
     }
-
     type Avance{
         _id: ID
         project_id: String
-        addDate: String
+        addDate: Date
         description: String
         observations: String
     }
@@ -53,7 +52,6 @@ const typeDefs = gql`
         avances: [Avance]
         getAvances(project_id: String): Avance
     }
-
     input ProyectoInput{
         name: String
         generalObjective: String
@@ -78,7 +76,6 @@ const typeDefs = gql`
         phase: String
         integrantes: [String]
     }
-
     input UsuarioInput{
         fullName: String
         identification: String
@@ -88,20 +85,20 @@ const typeDefs = gql`
         status: String
     }
     input InscripcionInput{
-    project_id: ID
-    user_id: ID
-    status: String
-    enrollmentDate: String
-    egressDate: String
-    }
-
+        project_id: String
+        user_id: String
+        status: String
+        enrollmentDate: String
+        egressDate: String
+        role: String
+         
+        }
     input AvanceInput{
         project_id: String
-        addDate: String
+        addDate: Date
         description: String
         observations: String
     }
-
     type Mutation{
         createProyecto(Proyecto:ProyectoInput): String 
         activeProyecto(name:String): String 
@@ -110,11 +107,11 @@ const typeDefs = gql`
         updateStatusUsuario(identification: String, status: String): String
         updateUsuario(_id: ID, fullName: String, identification: String, email: String, password: String, role: String, status: String): String
         deleteUsuario(identification: String): String
-        updateStatusInscripcion(_id: ID, status: String): String
+        updateStatusInscripcion(user_id: String, status: String): String
         deleteInscripcion(_id: ID):  ID
         createInscripcion(Inscripcion: InscripcionInput): String
         createAvance(Avance:AvanceInput): String
-        updateAvance(_id:ID, description:String): String
+        updateAvance(project_id:String, description:String, observations:String): String
         updateObservations(observations:String):String
         deleteAvance(proyecto1:String): String
         deleteObservation(observation1:String): String
