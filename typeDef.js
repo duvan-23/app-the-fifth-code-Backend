@@ -44,7 +44,7 @@ const typeDefs = gql`
         proyecto(name: String): Proyecto
         getProyecto(name:String): Proyecto
         usuarios: [Usuario]
-        getUsuario(identification: String): Usuario
+        getUsuario(_id: ID): Usuario
         inscripciones: [Inscripcion]
         getInscripcion(_id: ID):Inscripcion
         avances: [Avance]

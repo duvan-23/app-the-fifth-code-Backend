@@ -27,7 +27,8 @@ const usuarios3 = new Schema({
     },
     status: {
         type: String,
-        required: true
+        required: true,
+        default: "Pendiente"
     }
 })
 module.exports = model('usuarios3', usuarios3, "usuarios3")

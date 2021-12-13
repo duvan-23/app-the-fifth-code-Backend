@@ -11,7 +11,7 @@ const resolvers = {
         proyectos: async () => await ProyectoModel.find({}),
         getProyecto: async (parent, args, context, info) => await ProyectoModel.findOne({ name: args.name }),
         usuarios: async () => await UsuarioModel.find({}),
-        getUsuario: async (parent, args, context, info) => await UsuarioModel.findOne({ identification: args.identification }),
+        getUsuario: async (parent, args, context, info) => await UsuarioModel.findOne({ _id: args._id }),
         inscripciones: async () => await InscripcionesModel.find({}),
         getInscripcion: async (parent, args, context, info) => await InscripcionesModel.findOne({ _id: args._id }),
         avances: async () => await AvancesModel.find({}),
@@ -48,15 +48,14 @@ const resolvers = {
         },
         // Crear usuario
         createUsuario: (parent, args, context, info) => {
-            const { fullName, identification, email, password, role, status } = args.Usuario;
-            const encryptedPlainText = aes256.encrypt(key, password);
+            const { fullName, identification, email, password, role } = args.Usuario;
+            // const encryptedPlainText = aes256.encrypt(key, password);
             const nuevoUsuario = new UsuarioModel();
             nuevoUsuario.fullName = fullName;
             nuevoUsuario.identification = identification;
             nuevoUsuario.email = email;
-            nuevoUsuario.password = encryptedPlainText;
+            nuevoUsuario.password = password;
             nuevoUsuario.role = role;
-            nuevoUsuario.status = status;
             return nuevoUsuario.save()
                 .then(mensaje => "Usuario creado")
                 .catch(err => console.log(err));
