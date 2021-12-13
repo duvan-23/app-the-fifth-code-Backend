@@ -135,7 +135,7 @@ const resolvers = {
         },
         //Actualizar descripción de avances
         updateAvance: (parent, args, context, info) => {
-            return AvancesModel.updateOne({ _id: args._id}, { description: args.description } )
+            return AvancesModel.updateOne({project_id: args.project_id}, { description: args.description, observations: args.observations } )
                 .then(u => "Avance Actualizado")
                 .catch(err => console.log("Error"));
         },
