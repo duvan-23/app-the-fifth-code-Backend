@@ -61,6 +61,22 @@ const resolvers = {
                 return "Usuario no esta activo"
             }
         },
+        updatePhaseProyectos: (parent, args, context, info) => {
+            return ProyectoModel.updateOne({ name: args.name }, { phase: args.phase })
+                .then(u => "Phase Actualizada")
+                .catch(err => console.log("Falló la actualización"));
+        },
+        updateProyecto: (parent, args, context, info) => {
+            return ProyectoModel.updateOne({_id: args._id },
+                {
+                    name: args.name,
+                    generalObjective: args.generalObjective,
+                    specificObjectives: args.specificObjectives,
+                    budget: args.budget
+                })
+                .then(u => "Usuario actualizado")
+                .catch(err => console.log(err));
+        },
         // Crear usuario
         createUsuario: (parent, args, context, info) => {
             const { fullName, identification, email, password, role, status } = args.Usuario;

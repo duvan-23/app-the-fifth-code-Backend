@@ -1,15 +1,17 @@
 const { gql } = require('apollo-server-express')
 const typeDefs = gql`
+  scalar Date
     type Proyecto{
         _id: ID
         name: String
         generalObjective: String
         specificObjectives: [String]
         budget: Float
-        startDate: String
-        endDate: String
+        startDate: Date
+        endDate: Date
         leader_id: String
-        status: String      
+        status: String  
+        phase: String   
         integrantes: [String]
     }
 
@@ -49,7 +51,7 @@ const typeDefs = gql`
         inscripciones: [Inscripcion]
         getInscripcion(_id: ID):Inscripcion
         avances: [Avance]
-        getAvances(project_id: ID): Avance
+        getAvances(project_id: String): Avance
     }
 
     input ProyectoInput{
@@ -61,6 +63,7 @@ const typeDefs = gql`
         endDate: String
         leader_id: String
         status: String 
+        phase: String
         integrantes: [String]
     }
     input ProyectoInput{
@@ -70,7 +73,10 @@ const typeDefs = gql`
         budget: Float
         startDate: String
         endDate: String
+        leader_id: String
         status: String 
+        phase: String
+        integrantes: [String]
     }
 
     input UsuarioInput{
@@ -113,6 +119,8 @@ const typeDefs = gql`
         deleteAvance(proyecto1:String): String
         deleteObservation(observation1:String): String
         insertUserToProyecto(identification:String,name:String):String
+        updatePhaseProyectos(name: String, phase: String): String
+        updateProyecto(_id: ID, name: String, generalObjective: String, specificObjectives: String, budget: Float): String
     }
     
 `
