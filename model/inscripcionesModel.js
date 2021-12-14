@@ -32,4 +32,4 @@ const inscripciones=new Schema({
     }
     
 })
-module.exports = model('inscripciones1',inscripciones,"inscripciones1")
+module.exports = model('inscripciones2',inscripciones,"inscripciones2")
