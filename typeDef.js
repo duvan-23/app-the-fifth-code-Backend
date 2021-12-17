@@ -1,12 +1,6 @@
 const { gql } = require('apollo-server-express')
 const typeDefs = gql`
-<<<<<<< HEAD
-
-    scalar Date
-
-=======
   scalar Date
->>>>>>> 3873c338583390954f88f5552b7abab41eea9551
     type Proyecto{
         _id: ID
         name: String
@@ -63,8 +57,8 @@ const typeDefs = gql`
         generalObjective: String
         specificObjectives: [String]
         budget: Float
-        startDate: Date
-        endDate: Date
+        startDate: String
+        endDate: String
         leader_id: String
         status: String 
         phase: String
@@ -75,14 +69,9 @@ const typeDefs = gql`
         generalObjective: String
         specificObjectives: [String]
         budget: Float
-<<<<<<< HEAD
-        startDate: Date
-        endDate: Date
-=======
         startDate: String
         endDate: String
         leader_id: String
->>>>>>> 3873c338583390954f88f5552b7abab41eea9551
         status: String 
         phase: String
         integrantes: [String]
@@ -96,15 +85,6 @@ const typeDefs = gql`
         status: String
     }
     input InscripcionInput{
-<<<<<<< HEAD
-    project_id: ID
-    user_id: ID
-    status: String
-    enrollmentDate: String
-    egressDate: Date
-    }
-
-=======
         project_id: String
         user_id: String
         status: String
@@ -113,7 +93,6 @@ const typeDefs = gql`
         role: String
          
         }
->>>>>>> 3873c338583390954f88f5552b7abab41eea9551
     input AvanceInput{
         project_id: String
         addDate: Date
@@ -133,11 +112,6 @@ const typeDefs = gql`
         createInscripcion(Inscripcion: InscripcionInput): String
         createAvance(Avance:AvanceInput): String
         updateAvance(project_id:String, description:String, observations:String): String
-<<<<<<< HEAD
-        deleteAvance(proyecto1:String, observation1:String): String
-    
-        
-=======
         updateObservations(observations:String):String
         deleteAvance(proyecto1:String): String
         deleteObservation(observation1:String): String
@@ -145,7 +119,6 @@ const typeDefs = gql`
         updatePhaseProyectos(name: String, phase: String): String
         updateProyecto(_id: ID, name: String, generalObjective: String, specificObjectives: String, budget: Float): String
         autenticar(usuario:String, clave:String): String
->>>>>>> 3873c338583390954f88f5552b7abab41eea9551
     }
     
 `
