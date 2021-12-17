@@ -1,5 +1,8 @@
 const { gql } = require('apollo-server-express')
 const typeDefs = gql`
+
+    scalar Date
+
     type Proyecto{
         _id: ID
         name: String
@@ -34,7 +37,7 @@ const typeDefs = gql`
     type Avance{
         _id: ID
         project_id: String
-        addDate: String
+        addDate: Date
         description: String
         observations: String
     }
@@ -48,7 +51,7 @@ const typeDefs = gql`
         inscripciones: [Inscripcion]
         getInscripcion(_id: ID):Inscripcion
         avances: [Avance]
-        getAvances(project_id: ID): Avance
+        getAvances(project_id: String): Avance
     }
 
     input ProyectoInput{
@@ -56,8 +59,8 @@ const typeDefs = gql`
         generalObjective: String
         specificObjectives: [String]
         budget: Float
-        startDate: String
-        endDate: String
+        startDate: Date
+        endDate: Date
         leader_id: String
         status: String 
     }
@@ -66,8 +69,8 @@ const typeDefs = gql`
         generalObjective: String
         specificObjectives: [String]
         budget: Float
-        startDate: String
-        endDate: String
+        startDate: Date
+        endDate: Date
         status: String 
     }
 
@@ -84,12 +87,12 @@ const typeDefs = gql`
     user_id: ID
     status: String
     enrollmentDate: String
-    egressDate: String
+    egressDate: Date
     }
 
     input AvanceInput{
         project_id: String
-        addDate: String
+        addDate: Date
         description: String
         observations: String
     }
@@ -106,10 +109,9 @@ const typeDefs = gql`
         deleteInscripcion(_id: ID):  ID
         createInscripcion(Inscripcion: InscripcionInput): String
         createAvance(Avance:AvanceInput): String
-        updateAvance(_id:ID, description:String): String
-        updateObservations(observations:String):String
-        deleteAvance(proyecto1:String): String
-        deleteObservation(observation1:String): String
+        updateAvance(project_id:String, description:String, observations:String): String
+        deleteAvance(proyecto1:String, observation1:String): String
+    
         
     }
     

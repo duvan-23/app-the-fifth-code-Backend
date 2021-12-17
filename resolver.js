@@ -135,14 +135,8 @@ const resolvers = {
         },
         //Actualizar descripción de avances
         updateAvance: (parent, args, context, info) => {
-            return AvancesModel.updateOne({ _id: args._id}, { description: args.description } )
+            return AvancesModel.updateOne({project_id: args.project_id}, { description: args.description, observations: args.observations } )
                 .then(u => "Avance Actualizado")
-                .catch(err => console.log("Error"));
-        },
-        //Actualizar observaciones de avances
-        updateObservations: (parent, args, context, info) => {
-            return AvancesModel.updateOne({ observations: args.observations }, { status: args.observations } )
-                .then(u => "Observación Actualizada")
                 .catch(err => console.log("Error"));
         },
         //Borrar un avance
@@ -151,12 +145,7 @@ const resolvers = {
                 .then(u => "Avance Eliminado")
                 .catch(err => console.log("Fallo La Eliminación"));
         },
-        //Borrar una observación
-        deleteObservation: (parent, args, context, info) => {
-            return AvancesModel.deleteOne({ observations: args.observation1 })
-                .then(u => "Obervación Eliminada")
-                .catch(err => console.log("Fallo La Eliminación"));
-        },
+        
     }
 }
 module.exports = resolvers
