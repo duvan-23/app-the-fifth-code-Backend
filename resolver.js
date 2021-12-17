@@ -197,28 +197,28 @@ const resolvers = {
         },
         //Actualizar observaciones de avances
         updateObservations: (parent, args, context, info) => {
-           // if(isLeader(context.rol)){
+            if(isLeader(context.rol)){
                 return AvancesModel.updateOne({ observations: args.observations }, { status: args.observations } )
                     .then(u => "Observación Actualizada")
                     .catch(err => console.log("Error"));
-            //}
+            }
         },
         //Borrar un avance
         deleteAvance: (parent, args, context, info) => {
-           // if(isStudent(context.rol)){
+            if(isStudent(context.rol)){
                 return AvancesModel.deleteOne({ project_id: args.proyecto1})
                     .then(u => "Avance Eliminado")
                     .catch(err => console.log("Fallo La Eliminación"));
-            //}
+            }
         },
 
         //Borrar una observación
         deleteObservation: (parent, args, context, info) => {
-            //if(isLeader(context.rol)){
+            if(isLeader(context.rol)){
                 return AvancesModel.deleteOne({ observations: args.observation1 })
                     .then(u => "Obervación Eliminada")
                     .catch(err => console.log("Fallo La Eliminación"));
-            //}
+            }
         },
 
 
