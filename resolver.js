@@ -190,7 +190,7 @@ const resolvers = {
         //Actualizar descripción de avances
         updateAvance: (parent, args, context, info) => {
             //if(isStudent(context.rol)){
-                return AvancesModel.updateOne({ project_id: args.project_id}, { description: args.description } )
+                return AvancesModel.updateOne({ project_id: args.project_id}, { description: args.description, observations:args.observations})
                     .then(u => "Avance Actualizado")
                     .catch(err => console.log("Error"));
             //}
