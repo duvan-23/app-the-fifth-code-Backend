@@ -1,5 +1,3 @@
 build:
   docker:
     web: duvan2/frontproyecto
-run:
-  web: bundle exec puma -C config/puma.rb
