@@ -1,7 +1,5 @@
 const mongoose = require('mongoose')
-require('dotenv').config();
-
-const urlDB=process.env.Conection;
+const urlDB='mongodb+srv://duvan:735843.@cluster0.kench.mongodb.net/proyecto_ciclo4?retryWrites=true&w=majority';
 mongoose.connect(urlDB);
 
 const mongoDB = mongoose.connection;
