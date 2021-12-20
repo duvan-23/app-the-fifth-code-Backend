@@ -10,16 +10,16 @@ const key = 'CLAVEDIFICIL';
 
 const cool = require('cool-ascii-faces');
 const path = require('path');
-const PORT = 3000; 
+// const PORT = 3000; 
 
 
-express()
-  .use(express.static(path.join(__dirname, 'public')))
-  .set('views', path.join(__dirname, 'views'))
-  .set('view engine', 'ejs')
-//   .get('/', (req, res) => res.render('./app-the-fifth-code-Frontend/ciclo4_frontend/src/index.js'))
-  .get('/cool', (req, res) => res.send(cool()))
-  .listen(PORT, () => console.log(`Listening on ${ PORT }`));
+// express()
+//   .use(express.static(path.join(__dirname, 'public')))
+//   .set('views', path.join(__dirname, 'views'))
+//   .set('view engine', 'ejs')
+// //   .get('/', (req, res) => res.render('./app-the-fifth-code-Frontend/ciclo4_frontend/src/index.js'))
+//   .get('/cool', (req, res) => res.send(cool()))
+//   .listen(PORT, () => console.log(`Listening on ${ PORT }`));
 /*
 const proyectoAguas =new ProyectoModel({
     name:'Proyecto de aguas residuales'
