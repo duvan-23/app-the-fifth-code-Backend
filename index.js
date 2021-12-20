@@ -10,7 +10,7 @@ const key = 'CLAVEDIFICIL';
 
 const cool = require('cool-ascii-faces');
 const path = require('path');
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 
 express()
