@@ -29,7 +29,7 @@
   },
   "scripts": {
     "p:server": "node index.js",
-    "p:api": "cd ./app-the-fifth-code-Frontend/ciclo4_frontend && npm start",
+    "p:api:ui": "cd ./app-the-fifth-code-Frontend/ciclo4_frontend && npm start",
     "start": "concurrently npm:p:*"
   }
 }
